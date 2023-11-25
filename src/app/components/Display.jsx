@@ -13,9 +13,9 @@ const Display = () => {
           ( */}
 {/* {          
                 } */}
-                <div className='flex flex-row w-full h-full'>
+                <div className='flex flex-row w-full min-h-full h-full'>
                     <SideBar />
-                    <div className='flex flex-col w-full h-screen bg-lime-50 overflow-hidden'>
+                    <div className='flex flex-col w-full min-h-full bg-lime-50 overflow-x-hidden'>
                     <Header />
                     {pathName == "home" && <Profile />}
                     {pathName == "analysis" && <Analysis />}
