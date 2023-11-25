@@ -1,7 +1,7 @@
 "use client"
 
 import React, { Dispatch, LegacyRef, ReactEventHandler, SetStateAction, useEffect, useRef, useState } from "react";
-import { toast } from "react-toastify";
+import toast, { Toaster } from 'react-hot-toast';
 import { useContext, createContext } from "react";
 import { useRouter } from 'next/navigation';
 
@@ -33,14 +33,34 @@ export function useStateContext() {
   return store;
 }
 
+function persistForm() {
+  const storedUser = localStorage.getItem('user');
+  if (!storedUser) return LoginDetails;
+  return JSON.parse(storedUser)
+}
+
+
+
 function StoreProvider({ children }) {
-  const [userDetails, setUserDetails] = useState(LoginDetails);
+
+  const [userDetails, setUserDetails] = useState(persistForm);
   const [cropDetails, setCropDetails] = useState(CropDetails);
   const [hasAccount, setHasAccount] = useState(false);
   const [isUser, setIsUser] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [pathName, setPathName] = useState('');
   const [err, setErr] = useState('');
+
+  useEffect(() => {
+    localStorage.setItem('user', JSON.stringify(userDetails))
+  }, [userDetails])
+
+  useEffect(() => {
+    const storedState = localStorage.getItem('isLoggedIn');
+    if (!storedState) return false;
+    setIsUser(JSON.parse(storedState.IsUser));
+    return true
+  }, [])
 
   const router = useRouter();
 
@@ -60,7 +80,8 @@ function StoreProvider({ children }) {
         toast.success("Please Login with your details");
         setHasAccount(true);
       } else {
-        setErr(data.message)
+        console.log(data)
+        setErr(data)
       }
     } catch (error) {
       toast.warning("Network connection issues");
@@ -80,10 +101,43 @@ function StoreProvider({ children }) {
 
       const data = await response.json();
       if (data.message === "Successful") {
-        setIsUser(true);
+
+        const logInDetails = {
+          IsUser: true,
+          token: data.token
+        }
+        localStorage.setItem('isLoggedIn', JSON.stringify(logInDetails))
         setUserDetails(prev => ({ ...prev, firstName: data.details.firstName }));
       } else {
-        setErr(data.message)
+        toast.error(data)
+      }
+    } catch (error) {
+      toast.warning("Network connection issues");
+    }
+  };
+
+  const getUserDetails = async () => {
+    console.log('This is the post function')
+    try {
+      const response = await fetch('https://hackathon-klusterthon-group-12.vercel.app/farmer/sign_in', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userDetails),
+      });
+
+      const data = await response.json();
+      if (data.message === "Successful") {
+
+        const logInDetails = {
+          IsUser: true,
+          token: data.token
+        }
+        localStorage.setItem('isLoggedIn', JSON.stringify(logInDetails))
+        setUserDetails(prev => ({ ...prev, firstName: data.details.firstName }));
+      } else {
+        toast.error(data)
       }
     } catch (error) {
       toast.warning("Network connection issues");
@@ -118,7 +172,7 @@ function StoreProvider({ children }) {
 
   useEffect(() => {
     getPrediction();
-  },[])
+  }, [])
 
   const value = {
     cropDetails,
@@ -128,7 +182,7 @@ function StoreProvider({ children }) {
     isUser,
     userDetails,
     pathName,
-    showResult, 
+    showResult,
     setShowResult,
     setPathName,
     postUserDetails,

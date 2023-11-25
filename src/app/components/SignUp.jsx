@@ -41,7 +41,8 @@ const SignUp = () => {
         postUserDetails();
     }
 
-
+  
+     
     return (
         <>
             <form className='flex flex-col align-middle mt-28 w-full' onSubmit={handleSubmit}>
@@ -51,23 +52,23 @@ const SignUp = () => {
 
                 <div className='mb-4 px-4 flex flex-col w-full'>
                     {/* <label className="font-bold">Name:</label> */}
-                    <input ref={userRef} required type="text" name='firstName' placeholder="Firstname" className='p-1 border border-farmer-green rounded-md' onChange={handleUserDetails} />
+                    <input ref={userRef} required type="text" name='firstName' placeholder="Firstname" value={firstName} className='p-1 border border-farmer-green rounded-md' onChange={handleUserDetails} />
                 </div>
                 <div className='mb-4 px-4 flex flex-col w-full'>
                     {/* <label className="font-bold">Email:</label> */}
-                    <input ref={emailRef} required type="text" name='lastName' placeholder="Lastname" className='p-1 border-2 border-farmer-green rounded-md' onChange={handleUserDetails} />
+                    <input ref={emailRef} required type="text" name='lastName' placeholder="Lastname" value={lastName} className='p-1 border-2 border-farmer-green rounded-md' onChange={handleUserDetails} />
                 </div>
                 <div className='mb-4 px-4 flex flex-col w-full'>
                     {/* <label className="font-bold">Email:</label> */}
-                    <input ref={emailRef} required type="email" name='email' placeholder="Email" className='p-1 border-2 border-farmer-green rounded-md' onChange={handleUserDetails} />
+                    <input ref={emailRef} required type="email" name='email' placeholder="Email" value={email} className='p-1 border-2 border-farmer-green rounded-md' onChange={handleUserDetails} />
                 </div>
                 <div className='mb-4 px-4 flex flex-col w-full'>
                     {/* <label className="font-bold">Password:</label> */}
-                    <input ref={passwordRef} type='password' name='password' placeholder="Password" className='p-1 border-2 border-farmer-green rounded-md' onChange={handleUserDetails} />
+                    <input ref={passwordRef} type='password' name='password' placeholder="Password" value={password} className='p-1 border-2 border-farmer-green rounded-md' onChange={handleUserDetails} />
                 </div>
                 <div className='mb-4 px-4 flex flex-col w-full'>
                     {/* <label className="font-bold">Confirm Password:</label> */}
-                    <input ref={pwdConfirmRef} type='password' name='confirmPwd' placeholder="Confirm Password" className='p-1 border-2 border-farmer-green rounded-md' onChange={handleUserDetails} />
+                    <input ref={pwdConfirmRef} type='password' name='confirmPwd' placeholder="Confirm Password" value={confirmPwd} className='p-1 border-2 border-farmer-green rounded-md' onChange={handleUserDetails} />
                 </div>
 
                 <button
@@ -77,7 +78,7 @@ const SignUp = () => {
                 >
                     SignUp
                 </button>
-                <p class="self-start" onClick={() => setHasAccount(true)}>Have an account already? <a>Login</a></p>
+                <p class="self-start mt-4 ml-4" onClick={() => setHasAccount(true)}>Have an account already? <span className="mb-1.5 cursor-pointer hover:underline ">Login</span></p>
             </form>
         </>
     )

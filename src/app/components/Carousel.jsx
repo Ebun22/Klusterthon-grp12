@@ -1,5 +1,5 @@
 'use client'
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useStateContext } from '../Context/Context';
 
 const Carousel = () => {
@@ -12,6 +12,22 @@ const Carousel = () => {
 
     const prev = () => { imgCont.current.scrollLeft -= imgCont.current.clientWidth, console.log("prev was clicked, ", imgCont) };
     const next = () => { imgCont.current.scrollLeft += imgCont.current.clientWidth, console.log("prev was clicked, ", imgCont.current.clientWidth) };
+
+    useEffect(() => {
+        const slider = setInterval(() => {
+            const container = imgCont.current;
+
+            const maxScroll = container.scrollWidth - container.clientWidth;
+            if(container.scrollLeft >= maxScroll){
+                container.scrollLeft = 0;
+            }else{
+                container.scrollLeft += container.clientWidth
+            }
+        }, 3000)
+
+        return ()=> clearInterval(slider);
+    }, [])
+
     return (
         <div className='relative flex w-full h-full'>
             <p onClick={prev} className='absolute insert-0 left-0 z-10 h-full'>Prev</p>
