@@ -11,7 +11,7 @@ const TableHead = ({ head, children }: props) => {
         <>
             <div className="mt-6 w-full">
                 <table className="table-auto w-full ">
-                    <thead className=''>
+                    <thead className='bg-red'>
                         <tr>
                             {
                                 head.map((head: string | React.ReactNode, index: number) => (

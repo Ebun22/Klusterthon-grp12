@@ -66,7 +66,7 @@ const Report = () => {
         waterAvailability: 0.6,
         ph: 6.5,
         season: 'January-March'
-      }]
+    }]
 
     return (
         <div className='flex flex-col w-full h-full bg-white'>
@@ -83,28 +83,47 @@ const Report = () => {
                     data={data}
                 />
             </div>
-            <div>
-                <TableHead
-                    head={[
-                        <p className='rounded-s-lg  overflow-hidden w-full p-4 bg-rose-50 '>Crop name</p>,
-                        <p className='rounded-s-lg  overflow-hidden w-full p-4 bg-rose-50 '>ID</p>,
-                        <p className='w-full p-4 bg-rose-50'>Location</p>,
-                        <p className='rounded-e-lg  w-full p-4 bg-rose-50'>Harvest Season</p>]}
-                >
-                    {cropDetails.map((store) => {
-                        return (
-                            <TableBody
-                                details={[
-                                    <p>{store.label}</p>,
-                                    <p className="flex flex-row justify-center">{store.id}</p>,
-                                    <p>{store.country}</p>,
-                                    <p className="flex flex-row justify-center">{store.season}</p>,
-                                ]}
-                            />
-                        )
-                    }
-                    )}
-                </TableHead>
+            <div className="flex flex-row w-full rounded-lg py-6 px-6 mx-auto mt-4 pl-8">
+                <div>
+
+                    <TableHead
+                        head={[
+                            <p className='rounded-s-lg overflow-hidden w-full p-4 bg-lime-50'>Crop name</p>,
+                            <p className='p-4 bg-lime-50'>ID</p>,
+                            <p className='p-4 bg-lime-50'>Location</p>,
+                            <p className='rounded-e-lg p-4 bg-lime-50'>Harvest Season</p>]}
+                    >
+                        {cropDetails.map((store) => {
+                            return (
+                                <TableBody
+                                    details={[
+                                        <p>{store.label}</p>,
+                                        <p className="flex flex-row justify-center">{store.id}</p>,
+                                        <p>{store.country}</p>,
+                                        <p className="flex flex-row justify-center">{store.season}</p>,
+                                    ]}
+                                />
+                            )
+                        }
+                        )}
+                    </TableHead>
+                </div>
+                <div>
+                    
+                    <div>
+                        <p>Crop Details</p>
+                        <p>{cropDetails.id}</p>
+                    </div>
+                    <div>
+                        <p>Crop Name: {cropDetails.label}</p>
+                        <p>Location: {cropDetails.location}</p>
+                        <p>Temperature: {cropDetails.temperature}</p>
+                        <p>Atmospheric Humidity: {cropDetails.humidity}</p>
+                        <p>Soil pH: {cropDetails.pH}</p>
+                        <p>Water Availability: {cropDetails.waterAvailability}</p>
+                        <p>Harvest season: {cropDetails.season}</p>
+                    </div>
+                </div>
             </div>
         </div>
     )

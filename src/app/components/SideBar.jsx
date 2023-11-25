@@ -29,8 +29,8 @@ const SideBar = () => {
         handleLogin()
     }
     return (
-        <div className="w-1/5 min-h-screen flex flex-col text-white bg-farmer-green">
-            <div className='flex flex-row w-full py-6 px-4 bg-farmer-green'>
+        <div className="w-1/5 min-h-screen flex flex-col text-white bg-black">
+            <div className='flex flex-row w-full py-6 px-4 bg-black'>
                 <img
                     src="/dummy-profile.png"
                     className="rounded-full"
