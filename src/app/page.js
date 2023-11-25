@@ -1,12 +1,10 @@
-import Image from 'next/image';
-import { FormWrapper, Header, AuthPage } from './components';
+import { FormWrapper, Header, AuthPage, Display } from './components';
 
 export default function Home() {
+
   return (
     <main className="flex min-h-screen flex-col">
-      <AuthPage />
-      {/* <Header />
-      <FormWrapper /> */}
+      <Display />
     </main>
   )
 }

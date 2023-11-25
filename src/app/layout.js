@@ -1,5 +1,6 @@
 import './globals.css';
-import StoreProvider from '@/app/Context/Context';
+import StoreProvider from './Context/Context';
+import { ToastContainer } from "react-toastify";
 import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
         <StoreProvider>
           {children}
         </StoreProvider>
+        <ToastContainer />
       </body>
     </html>
   )

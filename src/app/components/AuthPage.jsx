@@ -1,27 +1,19 @@
 'use client'
 import React from 'react';
 import { useStateContext } from '../Context/Context';
-<<<<<<< HEAD
-import { Login, SignUp, UserAuth } from '.';
-=======
 import { Carousel, Login, SignUp, UserAuth } from '.';
->>>>>>> 95b0912733be055f1d3c6caf25060867e19eb723
 
 const AuthPage = () => {
     // const { hasAccount } = useStateContext()
     return (
-        <>
-            <div>
-<<<<<<< HEAD
-                {/* The carousel */}
-=======
+        <div className='flex flex-row overflow-hidden w-screen'>
+            <div className='w-1/2'>
                 <Carousel />
->>>>>>> 95b0912733be055f1d3c6caf25060867e19eb723
             </div>
-            <div>
+            <div className='w-1/2'>
                 <UserAuth />
             </div>
-        </>
+        </div>
     )
 }
 

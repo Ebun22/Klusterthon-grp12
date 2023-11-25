@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link';
-import { useStateContext } from '@/app/Context/Context';
+import { useStateContext } from '../Context/Context';
 import { useRouter } from 'next/router';
 import React, { useRef, useEffect, useState } from 'react';
 
@@ -11,6 +11,8 @@ const SignUp = () => {
     const pwdConfirmRef = useRef();
     const errRef = useRef();
 
+    const { userDetails, setUserDetails, setHasAccount, postUserDetails } = useStateContext();
+    const { firstName, lastName, email, password, confirmPwd } = userDetails;
     // useEffect(() => {
     //     userRef.current.focus();
     // }, [])
@@ -28,49 +30,55 @@ const SignUp = () => {
     // useEffect(() => {
     //     errRef.current.focus();
     // }, [error])
+    const handleUserDetails = (event) => {
+        console.log(event.currentTarget.name)
+        setUserDetails((prev) => ({ ...prev, [event.target.name]: event.target.value }))
+        console.log(userDetails)
+    }
 
-    const { userDetails } = useStateContext();
-    const { firstName, lastName, email, password, confirmPwd } = userDetails;
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        postUserDetails();
+    }
+
 
     return (
         <>
-            <div className='flex flex-col items-center mt-18'>
+            <form className='flex flex-col align-middle mt-28 w-full' onSubmit={handleSubmit}>
 
-                <form className='w-1/4' onSubmit={handleSubmit}>
+                <h1 className='py-8 pt-2 px-4 text-4xl font-bold text-farmer-green'>SignUp</h1>
+                {/* <p ref={errRef} className={`bg-red-100 py-2 px-1 border-l-4 text-red-800 text-center border-red-600`}>{error}</p> */}
 
-                    <h1 className='py-8 pt-2 px-4 text-4xl font-bold'>SignUp</h1>
-                    <p ref={errRef} className={`bg-red-100 py-2 px-1 border-l-4 text-red-800 text-center border-red-600`}>{error}</p>
+                <div className='mb-4 px-4 flex flex-col w-full'>
+                    {/* <label className="font-bold">Name:</label> */}
+                    <input ref={userRef} required type="text" name='firstName' placeholder="Firstname" className='p-1 border border-farmer-green rounded-md' onChange={handleUserDetails} />
+                </div>
+                <div className='mb-4 px-4 flex flex-col w-full'>
+                    {/* <label className="font-bold">Email:</label> */}
+                    <input ref={emailRef} required type="text" name='lastName' placeholder="Lastname" className='p-1 border-2 border-farmer-green rounded-md' onChange={handleUserDetails} />
+                </div>
+                <div className='mb-4 px-4 flex flex-col w-full'>
+                    {/* <label className="font-bold">Email:</label> */}
+                    <input ref={emailRef} required type="email" name='email' placeholder="Email" className='p-1 border-2 border-farmer-green rounded-md' onChange={handleUserDetails} />
+                </div>
+                <div className='mb-4 px-4 flex flex-col w-full'>
+                    {/* <label className="font-bold">Password:</label> */}
+                    <input ref={passwordRef} type='password' name='password' placeholder="Password" className='p-1 border-2 border-farmer-green rounded-md' onChange={handleUserDetails} />
+                </div>
+                <div className='mb-4 px-4 flex flex-col w-full'>
+                    {/* <label className="font-bold">Confirm Password:</label> */}
+                    <input ref={pwdConfirmRef} type='password' name='confirmPwd' placeholder="Confirm Password" className='p-1 border-2 border-farmer-green rounded-md' onChange={handleUserDetails} />
+                </div>
 
-                    <div className='mb-4 px-4 flex flex-col w-full'>
-                        {/* <label className="font-bold">Name:</label> */}
-                        <input ref={userRef} required type="text" placeholder="Firstname" className='p-1 border-2 border-black rounded-sm' />
-                    </div>
-                    <div className='mb-4 px-4 flex flex-col w-full'>
-                        {/* <label className="font-bold">Email:</label> */}
-                        <input ref={emailRef} required type="text" placeholder="Lastname" className='p-1 border-2 border-black rounded-sm' />
-                    </div>
-                    <div className='mb-4 px-4 flex flex-col w-full'>
-                        {/* <label className="font-bold">Email:</label> */}
-                        <input ref={emailRef} required type="email" placeholder="Email" className='p-1 border-2 border-black rounded-sm' />
-                    </div>
-                    <div className='mb-4 px-4 flex flex-col w-full'>
-                        {/* <label className="font-bold">Password:</label> */}
-                        <input ref={passwordRef} type='password' className='p-1 border-2 border-black rounded-sm' />
-                    </div>
-                    <div className='mb-4 px-4 flex flex-col w-full'>
-                        {/* <label className="font-bold">Confirm Password:</label> */}
-                        <input ref={pwdConfirmRef} type='password' className='p-1 border-2 border-black rounded-sm' />
-                    </div>
-
-                    <span class="self-start">Have an account already? <a>Login</a></span>
-                        <button
-                            className='w-full p-3 text-white font-bold mx-auto bg-sky-600 rounded-lg'
-                        >
-                            SignUp
-                        </button>
-                
-                </form>
-            </div>
+                <button
+                    type="button"
+                    onClick={(e) => handleSubmit(e)}
+                    className='w-full p-3 text-white font-bold mx-auto bg-farmer-green rounded-lg'
+                >
+                    SignUp
+                </button>
+                <p class="self-start" onClick={() => setHasAccount(true)}>Have an account already? <a>Login</a></p>
+            </form>
         </>
     )
 }

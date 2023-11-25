@@ -9,40 +9,44 @@ const Login = () => {
     const passwordRef = useRef();
     const errRef = useRef();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-    }
     // useEffect(() => {
     //     errRef.current.focus();
     // }, [])
-
-    const { userDetails } = useStateContext();
+    const { userDetails, setUserDetails, setHasAccount, handleLogin } = useStateContext();
     const { firstName, lastName, email, password, confirmPwd } = userDetails;
+    const handleUserDetails = (event) => {
+        console.log(event.currentTarget.name)
+        setUserDetails((prev) => ({...prev, [event.target.name]: event.target.value  }))
+        console.log(userDetails)
+    }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        handleLogin()
+    }
     return (
         <>
-            <div className='flex flex-col items-center mt-18'>
-                <form className='p-4 w-1/4' onSubmit={(e) => handleSubmit(e)}>
-                    <h1 className='py-8 text-4xl font-bold'>Login</h1>
-                    <p className={`bg-red-100 py-2 px-1 border-l-4 text-red-800 text-center border-red-600`}>error</p>
-                    <div className='mb-4 flex flex-col w-full'>
-                        <label className="font-bold">UserName:</label>
-                        <div class="input-group">
-                            <i class="fas fa-user"></i>
-                            <input type="text" ref={userRef} value={email} name="name" placeholder="Username" className='p-1 border-2 border-black rounded-sm' required />
-                        </div>
+            <form className='flex flex-col align-middle mt-28 w-full' onSubmit={(e) => handleSubmit(e)}>
+                <h1 className='py-8 text-4xl font-bold text-farmer-green'>Login</h1>
+                {/* <p className={`bg-red-100 py-2 px-1 border-l-4 text-red-800 text-center border-red-600`}>error</p> */}
+                <div className='mb-4 flex flex-col w-full'>
+                    {/* <label className="font-bold">UserName:</label> */}
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input required type="email" name='email' placeholder="Email" className='p-1 border-2 border-farmer-green rounded-md' onChange={handleUserDetails} />
                     </div>
-                    <div className='mb-4 flex flex-col w-full'>
-                        <label className="font-bold">Password:</label>
-                        <div class="input-group">
-                            <i class="fas fa-lock"></i>
-                            <input ref={passwordRef} type='password'value={password} className='p-1 border-2 border-black rounded-sm' name="psw" placeholder="Password" required />
-                        </div>
+                </div>
+                <div className='mb-4 flex flex-col w-full'>
+                    {/* <label className="font-bold">Password:</label> */}
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input ref={passwordRef} type='password' name='password' placeholder="Password" className='p-1 border-2 border-farmer-green rounded-md' onChange={handleUserDetails} />
                     </div>
-                    <p class="pwd"><a href="#">forgot password?</a></p>
-                    <button type='button' onClick={(e) => handleSubmit(e)} className='w-full p-3 text-white font-bold mx-auto  bg-sky-600 rounded-lg'>LOG IN</button><br /><br />
-                </form>
-            </div>
+                </div>
+                <p class="pwd"><a href="#">forgot password?</a></p>
+                <button type='button' onClick={(e) => handleSubmit(e)} className='w-full p-3 text-white font-bold mx-auto  bg-farmer-green rounded-lg'>LOG IN</button><br /><br />
+                <p onClick={() => setHasAccount(false)}>Don't have an account? SignUp</p>
+            </form>
         </>
     )
 }
