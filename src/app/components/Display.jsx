@@ -9,22 +9,22 @@ const Display = () => {
     return (
         <>
             {
-                isUser ?
-                    (
-                        <div className='flex flex-row w-full min-h-full h-full'>
-                            <SideBar />
-                            <div className='flex flex-col w-full min-h-full bg-lime-50 overflow-x-hidden'>
-                                <Header />
-                                {pathName == "home" && <Profile />}
-                                {pathName == "analysis" && <Analysis />}
-                                {pathName == "reports" && <Report />}
-                                {pathName == "settings" && <Settings />}
-                                {/*  */}
-                                {/* <FormWrapper /> */}
-                            </div>
+                // isUser ?
+                //     (
+                //         <div className='flex flex-row w-full min-h-full h-full'>
+                //             <SideBar />
+                //             <div className='flex flex-col w-full min-h-full bg-lime-50 overflow-x-hidden'>
+                //                 <Header />
+                //                 {pathName == "home" && <Profile />}
+                //                 {pathName == "analysis" && <Analysis />}
+                //                 {pathName == "reports" && <Report />}
+                //                 {pathName == "settings" && <Settings />}
+                //                 {/*  */}
+                //                 {/* <FormWrapper /> */}
+                //             </div>
 
-                        </div>
-                    ) :
+                //         </div>
+                //     ) :
                     <AuthPage />
             }
 
