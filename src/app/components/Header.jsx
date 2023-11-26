@@ -9,6 +9,7 @@ const Header = () => {
 
     const handleLogOut = () => {
         localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("user");
          setIsUser(false);
     };
 

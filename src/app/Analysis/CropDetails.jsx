@@ -1,9 +1,8 @@
 'use client'
 import React from 'react';
-
 import ExtraDetails from './ExtraDetails';
-import { useStateContext } from '../../../Context/Context';
-import { useMultiStepForm } from '../../../Context/MultiStepForm';
+import { useMultiStepForm } from '../Context/MultiStepForm';
+import { useStateContext } from '../Context/Context';
 
 const CropDetails = () => {
     const { cropDetails } = useStateContext();

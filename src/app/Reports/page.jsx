@@ -13,10 +13,10 @@ import {
     Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { useStateContext } from '../../../Context/Context';
-import { DetailsBox } from '../../UI';
-import TableHead from '../../UI/TableHead';
-import TableBody from '../../UI/TableBody';
+import { useStateContext } from '../Context/Context';
+import { DetailsBox } from '../components/UI';
+import TableHead from '../components/UI/TableHead';
+import TableBody from '../components/UI/TableBody';
 
 // import { FormWrapper, Header, AuthPage, SideBar } from '././components';
 
@@ -111,19 +111,24 @@ const Report = () => {
                     </TableHead>
                 </div>
                 <div>
-
+                    <div> <p>Crop details</p></div>
                     <div>
-                        <p>Crop Details</p>
-                        <p>{cropDetails.id}</p>
+                        <div>
+                            <p>Rice</p>
+                            <p>Nigeria</p>
+                        </div>
+                        <div>
+                            <p>Summer</p>
+                            <p>Late June - Early March</p>
+                        </div>
                     </div>
                     <div>
-                        <p>Crop Name: {cropDetails.label}</p>
-                        <p>Location: {cropDetails.location}</p>
-                        <p>Temperature: {cropDetails.temperature}</p>
-                        <p>Atmospheric Humidity: {cropDetails.humidity}</p>
-                        <p>Soil pH: {cropDetails.pH}</p>
-                        <p>Water Availability: {cropDetails.waterAvailability}</p>
-                        <p>Harvest season: {cropDetails.season}</p>
+                        <p>Soil pH: 3</p>
+                        <p>Water Avail. : 34.5</p>
+                    </div>
+                    <div>
+                        <p>Humidity: 67</p>
+                        <p>Temperature: 35.5C</p>
                     </div>
                 </div>
             </div>

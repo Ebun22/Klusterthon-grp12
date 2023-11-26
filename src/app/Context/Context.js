@@ -116,10 +116,8 @@ function StoreProvider({ children }) {
           token: data.token
         }
         localStorage.setItem('isLoggedIn', JSON.stringify(logInDetails))
-
-        const storedState = localStorage.getItem('isLoggedIn');
         setIsUser(true)
-
+        router.push("/Analysis")
         setUserDetails(prev => ({ ...prev, ...data.farmer.details }));
       } else {
         toast.error(data.message)
@@ -131,8 +129,11 @@ function StoreProvider({ children }) {
 
   const getUserDetails = async () => {
     const storedState = JSON.parse(localStorage.getItem('isLoggedIn'));
-    const token = storedState.token;
-    console.log(storedState.token)
+    if (storedState) {
+      const token = storedState?.token;
+      return token;
+    }
+  
     try {
       const response = await fetch('https://hackathon-klusterthon-group.vercel.app/farmer/details', {
         method: 'GET',

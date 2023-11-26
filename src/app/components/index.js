@@ -1,10 +1,10 @@
-export { default as Analysis } from './Pages/Analysis/Analysis';
-export { default as FormWrapper } from './Pages/Analysis/FormWrapper';
-export { default as CropDetails } from './Pages/Analysis/CropDetails';
-export { default as ExtraDetails } from './Pages/Analysis/ExtraDetails';
-export { default as Result } from './Pages/Analysis/Result';
+export { default as Analysis } from '../Analysis/page';
+export { default as FormWrapper } from '../Analysis/FormWrapper';
+export { default as CropDetails } from '../Analysis/CropDetails';
+export { default as ExtraDetails } from '../Analysis/ExtraDetails';
+export { default as Result } from '../Analysis/Result';
 export { default as Profile } from './Pages/Profile/Profile';
-export { default as Report } from './Pages/Report/Report';
+export { default as Report } from '../Reports/page';
 export { default as Settings } from './Pages/Settings';
 export { default as Login } from './Login';
 export { default as SignUp } from './SignUp';

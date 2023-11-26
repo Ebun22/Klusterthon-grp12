@@ -46,7 +46,6 @@ const SideBar = () => {
 
             <div className='mt-8 p-1.5'>
                 <NavLink
-                    link={["home", "reports", "analysis", "settings"]}
                     label={["Home", "Reports", "Analysis", "Settings"]}
                     icon={[<GoHome />, <CgNotes />, <SiGoogleanalytics />, <GoGear />]}
                 />
