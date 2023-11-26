@@ -71,8 +71,8 @@ const Report = () => {
     }]
 
     return (
-        <div className='flex flex-col w-full h-full bg-white'>
-            <div className="flex flex-row w-3/4 bg-lime-50 rounded-lg py-6 px-6 mx-auto mt-4 pl-8">
+        <div className='flex flex-col w-full h-full ml-3 rounded-mid shadow-lg mt-6 bg-white'>
+            <div className="flex flex-row w-4/5 bg-lime-shade-200 rounded-lg py-6 px-6 mx-auto mt-4 ml-18 pl-8">
                 <DetailsBox icon={<PiGrains />} number={40} title='Number of Crops' />
                 <p className="border border-1-slate-600 mx-6"></p>
                 <DetailsBox icon={<MdLocationPin />} number={69} title='Number of Locations' />
@@ -85,9 +85,8 @@ const Report = () => {
                     data={data}
                 />
             </div>
-            <div className="flex flex-row w-full rounded-lg py-6 px-6 mx-auto mt-4 pl-8">
-                <div>
-
+            <div className="flex flex-row w-full items-center rounded-lg">
+                <div className="w-1/2 ml-18">
                     <TableHead
                         head={[
                             <p className='rounded-s-lg overflow-hidden w-full p-4 bg-lime-50'>Crop name</p>,
@@ -110,7 +109,7 @@ const Report = () => {
                         )}
                     </TableHead>
                 </div>
-                <div>
+                <div className="w-1/3 ml-6 bg-white shadow-lg rounded-mid">
                     <div> <p>Crop details</p></div>
                     <div>
                         <div>

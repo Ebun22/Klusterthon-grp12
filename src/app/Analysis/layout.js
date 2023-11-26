@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
                 <StoreProvider>
                     <div className='flex flex-row w-full min-h-full h-full'>
                         <SideBar />
-                        <div className='flex flex-col w-full min-h-full bg-lime-50 overflow-x-hidden'>
+                        <div className='flex flex-col w-full min-h-full bg-white overflow-x-hidden'>
                             <Header />
                             {children}
                         </div>

@@ -28,7 +28,7 @@ const Home = () => {
                         <input required type="email" name='email' placeholder="Email" value={password} className='p-2 border border-farmer-green rounded-md w-full' onChange={handleUserDetails} />
                     </div>
                 </div>
-                <div className='mb-2 flex flex-col w-1/2 mt-6 mx-auto'>
+                <div className='mb-6 flex flex-col w-1/2 mt-6 mx-auto'>
                     <label className="font-bold text-xl">Confirm Password:</label>
                     <div className="input-group">
                         <input required type="password" name='confirmPwd' placeholder="confirm Password" value={confirmPwd} className='p-2 border border-farmer-green rounded-md w-full' onChange={handleUserDetails} />

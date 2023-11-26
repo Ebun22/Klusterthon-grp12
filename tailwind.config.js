@@ -14,6 +14,12 @@ module.exports = {
       },
       colors: {
         'farmer-green': '#7d9820',
+        'lime-shade-200': '#ECFCCB',
+        'lime-shade-100': '#F9FFED'
+      },
+      borderRadius: {
+        'mid': '15px',
+        'large': '25px',
       },
     },
   },

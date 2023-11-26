@@ -14,7 +14,7 @@ const Header = () => {
     };
 
     return (
-        <div className="flex flex-row w-full ml-3 mt-1 rounded-l-full shadow-sm bg-white ">
+        <div className="flex flex-row w-full ml-3 rounded-l-large shadow-lg bg-white ">
             <p className='font-bold text-3xl p-4 pl-6'>Dashboard</p>
             <div className="flex flex-row justify-end w-full mr-6 py-4">
                 <div className="flex flex-col mr-2">
