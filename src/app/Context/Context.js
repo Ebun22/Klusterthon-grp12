@@ -39,14 +39,20 @@ function persistForm() {
   return JSON.parse(storedUser)
 }
 
-
+function persistLogin() {
+  const storedState = localStorage.getItem('isLoggedIn');
+  if (!storedState) return false;
+  return true
+}
 
 function StoreProvider({ children }) {
 
+  const [farmerData, setFarmerData] = useState({ details: {}, crops: [] })
   const [userDetails, setUserDetails] = useState(persistForm);
   const [cropDetails, setCropDetails] = useState(CropDetails);
   const [hasAccount, setHasAccount] = useState(false);
-  const [isUser, setIsUser] = useState(false);
+  const [store, setStore] = useState(null);
+  const [isUser, setIsUser] = useState(persistLogin);
   const [showResult, setShowResult] = useState(false);
   const [pathName, setPathName] = useState('');
   const [err, setErr] = useState('');
@@ -58,9 +64,12 @@ function StoreProvider({ children }) {
   useEffect(() => {
     const storedState = localStorage.getItem('isLoggedIn');
     if (!storedState) return false;
-    setIsUser(JSON.parse(storedState.IsUser));
-    return true
+    setIsUser(true);
+    setStore(storedState.token);
+
   }, [])
+
+  console.log(isUser, store);
 
   const router = useRouter();
 
@@ -80,8 +89,8 @@ function StoreProvider({ children }) {
         toast.success("Please Login with your details");
         setHasAccount(true);
       } else {
-        console.log(data)
-        setErr(data)
+        console.log(data.message)
+        setErr(data.message)
       }
     } catch (error) {
       toast.warning("Network connection issues");
@@ -107,9 +116,13 @@ function StoreProvider({ children }) {
           token: data.token
         }
         localStorage.setItem('isLoggedIn', JSON.stringify(logInDetails))
-        setUserDetails(prev => ({ ...prev, firstName: data.details.firstName }));
+
+        const storedState = localStorage.getItem('isLoggedIn');
+        setIsUser(true)
+
+        setUserDetails(prev => ({ ...prev, ...data.farmer.details }));
       } else {
-        toast.error(data)
+        toast.error(data.message)
       }
     } catch (error) {
       toast.warning("Network connection issues");
@@ -117,32 +130,33 @@ function StoreProvider({ children }) {
   };
 
   const getUserDetails = async () => {
-    console.log('This is the post function')
+    const storedState = JSON.parse(localStorage.getItem('isLoggedIn'));
+    const token = storedState.token;
+    console.log(storedState.token)
     try {
-      const response = await fetch('https://hackathon-klusterthon-group-12.vercel.app/farmer/sign_in', {
+      const response = await fetch('https://hackathon-klusterthon-group.vercel.app/farmer/details', {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userDetails),
+          'Authorization': 'X ' + token,
+        }
       });
 
       const data = await response.json();
-      if (data.message === "Successful") {
-
-        const logInDetails = {
-          IsUser: true,
-          token: data.token
-        }
-        localStorage.setItem('isLoggedIn', JSON.stringify(logInDetails))
-        setUserDetails(prev => ({ ...prev, firstName: data.details.firstName }));
+      if (response.status === 200) {
+        console.log(data)
+        setFarmerData({...data});
+        console.log(farmerData.crops.length)
       } else {
-        toast.error(data)
+        toast.error(data.message)
       }
     } catch (error) {
       toast.warning("Network connection issues");
     }
   };
+
+useEffect(() => {
+  getUserDetails();
+  }, [])
 
   const getPrediction = async () => {
     const details = {
@@ -170,9 +184,9 @@ function StoreProvider({ children }) {
     }
   };
 
-  useEffect(() => {
-    getPrediction();
-  }, [])
+  // useEffect(() => {
+  //   getPrediction();
+  // }, [])
 
   const value = {
     cropDetails,
@@ -180,9 +194,11 @@ function StoreProvider({ children }) {
     hasAccount,
     setHasAccount,
     isUser,
+    setIsUser,
     userDetails,
     pathName,
     showResult,
+    farmerData,
     setShowResult,
     setPathName,
     postUserDetails,
