@@ -38,7 +38,7 @@ function persistForm() {
     const storedUser = localStorage.getItem('user');
     if (!storedUser) return LoginDetails;
     return JSON.parse(storedUser)
-  }
+  } return LoginDetails
 }
 
 function persistLogin() {
@@ -46,7 +46,7 @@ function persistLogin() {
     const storedState = localStorage.getItem('isLoggedIn');
     if (!storedState) return false;
     return true
-  }
+  } return false;
 }
 
 function StoreProvider({ children }) {
