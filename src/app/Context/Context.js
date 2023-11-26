@@ -34,15 +34,19 @@ export function useStateContext() {
 }
 
 function persistForm() {
-  const storedUser = localStorage.getItem('user');
-  if (!storedUser) return LoginDetails;
-  return JSON.parse(storedUser)
+  if (typeof window !== 'undefined') {
+    const storedUser = localStorage.getItem('user');
+    if (!storedUser) return LoginDetails;
+    return JSON.parse(storedUser)
+  }
 }
 
 function persistLogin() {
-  const storedState = localStorage.getItem('isLoggedIn');
-  if (!storedState) return false;
-  return true
+  if (typeof window !== 'undefined') {
+    const storedState = localStorage.getItem('isLoggedIn');
+    if (!storedState) return false;
+    return true
+  }
 }
 
 function StoreProvider({ children }) {
@@ -133,7 +137,7 @@ function StoreProvider({ children }) {
       const token = storedState?.token;
       return token;
     }
-  
+
     try {
       const response = await fetch('https://hackathon-klusterthon-group.vercel.app/farmer/details', {
         method: 'GET',
@@ -145,7 +149,7 @@ function StoreProvider({ children }) {
       const data = await response.json();
       if (response.status === 200) {
         console.log(data)
-        setFarmerData({...data});
+        setFarmerData({ ...data });
         console.log(farmerData.crops.length)
       } else {
         toast.error(data.message)
@@ -155,8 +159,8 @@ function StoreProvider({ children }) {
     }
   };
 
-useEffect(() => {
-  getUserDetails();
+  useEffect(() => {
+    getUserDetails();
   }, [])
 
   const getPrediction = async () => {
