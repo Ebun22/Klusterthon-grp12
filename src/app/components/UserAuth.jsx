@@ -6,7 +6,7 @@ import { useStateContext, } from '../Context/Context';
 const UserAuth = () => {
     const { hasAccount } = useStateContext();
     // const authCont = useRef(null)
-
+    console.log(hasAccount);
     // const goToSignUp = () => { authCont.current.scrollLeft += 250, console.log("This is the login ", authCont.current) };
     return (
         <div className="flex flex-col w-full h-full items-center justify-center">

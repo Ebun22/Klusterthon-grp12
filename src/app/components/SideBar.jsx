@@ -10,14 +10,11 @@ import { NavLink } from './UI';
 
 const SideBar = () => {
     const userRef = useRef();
-    const passwordRef = useRef();
-    const errRef = useRef();
-
-    // useEffect(() => {
-    //     errRef.current.focus();
-    // }, [])
-    const { userDetails, setUserDetails, setHasAccount, handleLogin } = useStateContext();
+ 
+    const { userDetails, setUserDetails, setHasAccount, handleLogin,  isVisible, setIsVisible } = useStateContext();
     const { firstName, lastName, email, password, confirmPwd } = userDetails;
+
+    
     const handleUserDetails = (event) => {
         console.log(event.currentTarget.name)
         setUserDetails((prev) => ({ ...prev, [event.target.name]: event.target.value }))
@@ -28,29 +25,33 @@ const SideBar = () => {
         e.preventDefault();
         handleLogin()
     }
-    return (
-        <div className="w-1/5 min-h-screen flex flex-col text-white bg-black">
-            <div className='flex flex-row w-full py-6 px-4 bg-black'>
-                <img
-                    src="/dummy-profile.png"
-                    className="rounded-full"
-                    width={80}
-                    height={80}
-                    alt="profile pic"
-                />
-                <div className='flex flex-col w-full mt-4 pl-4 text-white'>
-                    <p className='font-bold text-3xl'>Hi, {userDetails.firstName}</p>{/*insert dynamic farmer name here */}
-                    {/* <p>Increase yeild by finding out the best planting and Harvet season for all your crops today!</p> */}
-                </div>
-            </div>
 
-            <div className='mt-8 p-1.5'>
-                <NavLink
-                    label={["Home", "Reports", "Analysis", "Settings"]}
-                    icon={[<GoHome />, <CgNotes />, <SiGoogleanalytics />, <GoGear />]}
-                />
-            </div>
+    const close = () => {setIsVisible(false)}
+
+console.log(isVisible)
+    return (
+        <div className={`${isVisible ? "absolute z-10 left-0 min-h-screen text-white bg-black px-6 lg:block flex flex-col w-1/5 relative" : "hidden min-h-screen flex flex-col text-white bg-black px-6 lg:block flex flex-col w-1/5 relative" }`}>
+        <div className={`flex flex-row w-full`}>
+          <img
+            src="/logo.png"
+            className="mx-4 pl-3 ml-0"
+            width={170}
+            height={150}
+            alt="profile pic"
+          />
+          <div className='hidden lg:flex text-3xl h-10 my-auto font-light w-full justify-end items-end'>
+            <p className='hidden lg:text-3xl font-light w-3.5 ' onClick={close}>X</p>
+          </div>
         </div>
+      
+        <div className={`transform ${isVisible ? 'translate-x-0 w-full block' : 'sm:block flex flex-col mt-8 p-1.5 w-full'}`}>
+          <NavLink
+            label={["Home", "Reports", "Analysis", "Settings"]}
+            icon={[<GoHome />, <CgNotes />, <SiGoogleanalytics />, <GoGear />]}
+          />
+        </div>
+      </div>
+      
     )
 }
 

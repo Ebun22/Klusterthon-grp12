@@ -9,14 +9,14 @@ interface props {
 const TableHead = ({ head, children }: props) => {
     return (
         <>
-            <div className="mt-6 w-full">
-                <table className="table-auto w-full ">
-                    <thead className='bg-red'>
+            <div className="mt-6 my-8 w-full">
+                <table className="table-auto w-full">
+                    <thead className='w-24'>
                         <tr>
                             {
                                 head.map((head: string | React.ReactNode, index: number) => (
                                     <>
-                                        <td className="p-0 border-r border-rose-50" key={index}>{head}</td>                               
+                                        <td className="p-0 border-r border-farmer-green w-24 lg:w-full" key={index}>{head}</td>                               
                                     </>
                                 ))
                             }

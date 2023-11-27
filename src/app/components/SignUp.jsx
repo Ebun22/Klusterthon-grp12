@@ -11,7 +11,7 @@ const SignUp = () => {
     const pwdConfirmRef = useRef();
     const errRef = useRef();
 
-    const { userDetails, setUserDetails, setHasAccount, postUserDetails } = useStateContext();
+    const { userDetails, setUserDetails, setHasAccount, postUserDetails, hasAccount } = useStateContext();
     const { firstName, lastName, email, password, confirmPwd } = userDetails;
     // useEffect(() => {
     //     userRef.current.focus();
@@ -78,7 +78,7 @@ const SignUp = () => {
                 >
                     SignUp
                 </button>
-                <p class="self-start mt-4 ml-4" onClick={() => setHasAccount(true)}>Have an account already? <span className="mb-1.5 cursor-pointer hover:underline ">Login</span></p>
+                <p className="self-start mt-4 ml-4" onClick={() =>{ setHasAccount(true),  console.log('clicked Login', hasAccount)}}>Have an account already? <span className="mb-1.5 cursor-pointer hover:underline ">Login</span></p>
             </form>
         </>
     )

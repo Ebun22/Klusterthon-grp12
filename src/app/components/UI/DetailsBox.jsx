@@ -5,7 +5,7 @@ import React from 'react';
 const NumBox = ({icon, number, title}) => {
 
     return (
-        <div className="flex flex-row  w-full justify-center pr-4 ">
+        <div className="flex flex-col sm:flex flex-row w-full justify-center pr-4 ">
             <div className="flex flex-row bg-white h-12 rounded-full py-4 px-4 mr-4 ">
               {icon}
             </div>

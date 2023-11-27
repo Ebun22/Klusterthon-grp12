@@ -6,7 +6,7 @@ import { Carousel, Login, SignUp, UserAuth } from '.';
 const AuthPage = () => {
     // const { hasAccount } = useStateContext()
     return (
-        <div className='flex flex-row overflow-hidden w-screen'>
+        <div className='flex flex-row overflow-x-hidden w-screen'>
             <div className='w-1/2'>
                 <Carousel />
             </div>
