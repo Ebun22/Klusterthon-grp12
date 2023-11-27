@@ -6,9 +6,9 @@ import { useStateContext } from '../Context/Context';
 
 const CropDetails = () => {
     const { cropDetails, setCropDetails, getPrediction } = useStateContext();
-    const { label, country } = cropDetails;
+    const { label, Country } = cropDetails;
 
-    const handleChange= (event) => {
+    const handleChange = (event) => {
         console.log(event.currentTarget.name)
         setCropDetails((prev) => ({...prev, [event.target.name]: event.target.value  }))
         console.log(cropDetails)
@@ -20,7 +20,7 @@ const CropDetails = () => {
             <form className='p-4 w-full' onSubmit="{(e) => handleSubmit(e)}">
                 <div className='mb-4 flex flex-col w-full'>
                     <label className="font-bold">Location(country):</label>
-                    <input type='location' value={country} name='country' className='p-1 border border-black rounded-sm' onChange={handleChange} required />
+                    <input type='location' value={Country} name='Country' className='p-1 border border-black rounded-sm' onChange={handleChange} required />
                 </div>
                 <div className='mb-4 flex flex-col w-full'>
                     <label className="font-bold">Crop:</label>

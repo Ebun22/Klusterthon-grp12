@@ -30,11 +30,11 @@ const Carousel = () => {
 
     return (
         <div className='relative flex w-full h-full'>
-            <p onClick={prev} className='absolute insert-0 left-0 z-10 h-full'>Prev</p>
+            <p onClick={prev} className='absolute insert-0 left-0 z-10 h-full w-14'></p>
             <div ref={imgCont} className=' flex flex-row items-center w-full h-full overflow-x-scroll scroll-smooth snap-mandatory snap-x '>
                 {images.map((image, index) => { return (<img key={index} className='snap-start h-screen min-w-full' src={image} />) })}
             </div>
-            <div onClick={next} className='absolute inset-y-0 right-0 z-10 h-full'>next</div>
+            <div onClick={next} className='absolute inset-y-0 right-0 z-10 h-full w-14'></div>
 
         </div>
     )

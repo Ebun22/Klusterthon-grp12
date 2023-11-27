@@ -3,13 +3,18 @@ import React, { useState, useEffect } from 'react';
 import { Image } from 'next/image';
 import { IoLogOutOutline } from "react-icons/io5";
 import { useStateContext } from '../Context/Context';
+import { useRouter } from 'next/navigation';
+
 
 const Header = () => {
     const { setIsUser, userDetails, setIsVisible } = useStateContext();
 
+    const router = useRouter()
+
     const handleLogOut = () => {
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("user");
+router.push('/')
         setIsUser(false);
     };
 
@@ -18,7 +23,7 @@ const Header = () => {
     return (
         <div className="flex flex-row w-full ml-3 rounded-l-large shadow-lg bg-white ">
             <div
-                className="hamburg block cursor-pointer h-4 my-auto ml-2"
+                className="hamburg block cursor-pointer h-4 my-auto ml-2 lg:hidden"
                 onClick={handleHamburger}
             >
                 <div className="first w-6 h-1 mb-1 bg-black  rounded-mid"></div>

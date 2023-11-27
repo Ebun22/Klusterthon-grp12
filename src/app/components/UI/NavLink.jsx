@@ -21,7 +21,7 @@ const NavLink = ({ icon, label }) => {
         <>
             {label?.map((name, index) => {
                 return (
-                    <div className={`flex flex-row  p-4 ${window.location.pathname.includes(name) ? 'bg-lime-100 text-black rounded-md' : 'text-white'}`} >
+                    <div key={index} className={`flex flex-row  p-4 ${window.location.pathname.includes(name) ? 'bg-lime-100 text-black rounded-md' : 'text-white'}`} >
                         <span className='mt-1 mr-3.5'>{icon[index]}</span>
                         <Link href={`/${name}`} className="font-bold">{name}</Link>
                     </div >

@@ -6,8 +6,23 @@ import { useMultiStepForm } from '../Context/MultiStepForm';
 import Link from 'next/link';
 
 const CropDetails = () => {
-    const { cropDetails } = useStateContext();
-    const { cropName, location } = cropDetails;
+    const { cropDetails, prediction } = useStateContext();
+    const { label } = cropDetails;
+
+    const getMonths = (prediction) => {
+        const seasonsData = {
+          winter: "early December - mid February",
+          spring: "mid March - late May",
+          summer: "early June - mid August",
+          autumn: "mid September - late November",
+          rainy: "April - October (varies by region)",
+          dry: "November - March (varies by region)",
+        };
+    
+        if(seasonsData.hasOwnProperty(seasons)){
+          return seasonsData[seasons];
+        }
+      }
 
     return (
         <div className='flex flex-col items-center my-auto align-middle'>
@@ -20,7 +35,7 @@ const CropDetails = () => {
             />
             <div className='flex flex-col items-center align-middle'>
                 <p className="font-bold text-2xl">Congratulations🥳</p>
-                <p>Planted today? You can harvest this Rice in starting November!</p>
+                <p>Planted today? You can harvest this {label} in starting {prediction}!</p>
                 <Link href="/?=reports">
                     <button className="p-3 mt-6 text-white font-bold mx-auto bg-black rounded-lg">View Reports</button>
                 </Link>

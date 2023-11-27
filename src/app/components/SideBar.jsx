@@ -4,6 +4,8 @@ import { useStateContext, } from '../Context/Context';
 import { GoHome, GoGear } from "react-icons/go";
 import { CgNotes } from "react-icons/cg";
 import { SiGoogleanalytics } from "react-icons/si";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { NavLink } from './UI';
@@ -28,13 +30,27 @@ const SideBar = () => {
 
     const close = () => {setIsVisible(false)}
 
+    const driverObj = driver({
+      animate: false,
+      showProgress: false,
+      showButtons: ['next', 'previous', 'close'],
+      steps: [
+          { element: '#sideBar', popover: { title: 'SideBar', description: 'This is the sideBar that directs you to every page a smart farmer would need. Head over to Analysis to enter in your details and start FARMING SMART!', side: "right", align: 'start' } },
+          { popover: { title: 'Have fun Smart Farmer!', description: 'View all your analisys at reports' } }
+      ]
+  });
+
+  useEffect(() => {
+      driverObj.drive();
+  }, [])
+
 console.log(isVisible)
     return (
-        <div className={`${isVisible ? "absolute z-10 left-0 min-h-screen text-white bg-black px-6 lg:block flex flex-col w-1/5 relative" : "hidden min-h-screen flex flex-col text-white bg-black px-6 lg:block flex flex-col w-1/5 relative" }`}>
+        <div id='sideBar' className={`${isVisible ? "absolute z-10 left-0 min-h-screen text-white bg-black px-6 lg:block flex flex-col w-1/5 relative" : "hidden min-h-screen flex flex-col text-white bg-black px-6 lg:block flex flex-col w-1/5 relative" }`}>
         <div className={`flex flex-row w-full`}>
           <img
             src="/logo.png"
-            className="mx-4 pl-3 ml-0"
+            className="mx-4 pl-3 ml-0 mt-2"
             width={170}
             height={150}
             alt="profile pic"

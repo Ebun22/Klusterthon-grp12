@@ -14,11 +14,11 @@ const LoginDetails = {
 }
 
 const CropDetails = {
-  country: '',
+  Country: '',
   label: '',
   temperature: 0,
   humidity: 0,
-  pH: 0,
+  ph: 0,
   waterAvailability: 0,
 }
 
@@ -44,7 +44,7 @@ function persistForm() {
 function persistLogin() {
   if (typeof window !== 'undefined') {
     const storedState = localStorage.getItem('isLoggedIn');
-    if (!storedState) return ;
+    if (!storedState) return;
     return true
   };
 }
@@ -52,7 +52,8 @@ function persistLogin() {
 function StoreProvider({ children }) {
 
   const [farmerData, setFarmerData] = useState({ details: {}, crops: [] })
-  const [userId, setUserId] =useState('')
+  const [URL, setURL] = useState('')
+  const [prediction, setPrediction] = useState('')
   const [userDetails, setUserDetails] = useState(persistForm);
   const [cropDetails, setCropDetails] = useState(CropDetails);
   const [hasAccount, setHasAccount] = useState(false);
@@ -62,29 +63,30 @@ function StoreProvider({ children }) {
   const [showResult, setShowResult] = useState(false);
   const [pathName, setPathName] = useState('');
   const [err, setErr] = useState('');
-
+  
+  const router = useRouter();
+  
   useEffect(() => {
     localStorage.setItem('user', JSON.stringify(userDetails))
   }, [userDetails])
 
   useEffect(() => {
     const storedState = localStorage.getItem('isLoggedIn');
-    if (!storedState) return ;
+    if (!storedState) return;
     setIsUser(true);
     setStore(storedState.token);
 
   }, [])
 
-  useEffect(()=> {
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedState = JSON.parse(localStorage.getItem('isLoggedIn'));
       const token = storedState?.token;
       setStore(token);
     }
-  },[userDetails])
-  
+  }, [userDetails])
 
-  const router = useRouter();
+
 
   const postUserDetails = async () => {
     console.log('This is the post function')
@@ -122,6 +124,7 @@ function StoreProvider({ children }) {
       });
 
       const data = await response.json();
+      console.log(response.status)
       if (data.message === "Successful") {
 
         const logInDetails = {
@@ -130,6 +133,7 @@ function StoreProvider({ children }) {
         }
         localStorage.setItem('isLoggedIn', JSON.stringify(logInDetails))
         setIsUser(true)
+        
         router.push("/Analysis")
         setUserDetails(prev => ({ ...prev, ...data.farmer.details }));
       } else {
@@ -141,15 +145,15 @@ function StoreProvider({ children }) {
   };
 
   const getUserDetails = async () => {
-   
+
     try {
       const response = await fetch('https://hackathon-klusterthon-group.vercel.app/farmer/details', {
         method: 'GET',
         headers: {
-          'Authorization': 'X ' + store,
+          'Authorization': 'X ' + JSON.parse(localStorage.getItem('isLoggedIn')).token,
         }
       });
-
+console.log(store)
       const data = await response.json();
       if (response.status === 200) {
         console.log(data)
@@ -165,33 +169,46 @@ function StoreProvider({ children }) {
 
   useEffect(() => {
     getUserDetails();
-
   }, [])
 
+  useEffect(() => {
+    getUserDetails();
+  }, [prediction])
+
   const getPrediction = async () => {
+    let details
+    if (cropDetails.temperature === 0) {
+      details = {
+        Country: cropDetails.Country,
+        label: cropDetails.label,
+        id: farmerData.details._id
+      }
+      setURL('http://hackathon-klusterthon-group.vercel.app/crop/get_prediction')
+    } else {
+      details = { ...cropDetails, id: farmerData.details._id }
+      setURL('http://hackathon-klusterthon-group.vercel.app/crop/get_prediction')
+    }
     console.log(farmerData, cropDetails)
-
-    // try {
-    //   const response = await fetch('https://hackathon-klusterthon-group.vercel.app/crop/get_prediction', {
-    //     method: 'POST',
-    //     headers: {
-    //       // 'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(details),
-    //   });
-
-    //   const data = await response.json();
-    //   console.log(response)
-    //   console.log(data)
-    // } catch (error) {
-    //   toast.warning("Network connection issues");
-    // }
+    console.log(details)
+    try {
+      const response = await fetch(`${URL}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(details),
+      });
+      const data = await response.json();
+      if(response.status === 200){
+        setPrediction(data.predictions[0])
+        setShowResult(true)
+      }
+    } catch (error) {
+      toast.error("Network connection issues");
+    }
   };
-
-  // useEffect(() => {
-  //   getPrediction();
-  // }, [])
-
+  console.log(farmerData.details.id)
+ 
   const value = {
     cropDetails,
     setCropDetails,
@@ -205,6 +222,7 @@ function StoreProvider({ children }) {
     pathName,
     showResult,
     farmerData,
+    prediction,
     setShowResult,
     setPathName,
     getPrediction,
