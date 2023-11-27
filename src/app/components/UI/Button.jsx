@@ -1,14 +1,7 @@
 "use client"
 import React, {ReactEventHandler, useState} from 'react';
 
-interface props {
-    type: "button" | "submit" | "reset" | undefined,  
-    text: string,
-    onClick: ReactEventHandler,
-    style?: string
-}
-
-const Button = ({ type, text, onClick, style}: props) => {
+const Button = ({ type, text, onClick, style}) => {
     return (
         <>
             <div className="flex justify-center w-full my-6">

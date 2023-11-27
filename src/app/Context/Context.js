@@ -44,17 +44,19 @@ function persistForm() {
 function persistLogin() {
   if (typeof window !== 'undefined') {
     const storedState = localStorage.getItem('isLoggedIn');
-    if (!storedState) return false;
+    if (!storedState) return ;
     return true
-  } return false;
+  };
 }
 
 function StoreProvider({ children }) {
 
   const [farmerData, setFarmerData] = useState({ details: {}, crops: [] })
+  const [userId, setUserId] =useState('')
   const [userDetails, setUserDetails] = useState(persistForm);
   const [cropDetails, setCropDetails] = useState(CropDetails);
   const [hasAccount, setHasAccount] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [store, setStore] = useState(null);
   const [isUser, setIsUser] = useState(persistLogin);
   const [showResult, setShowResult] = useState(false);
@@ -67,13 +69,20 @@ function StoreProvider({ children }) {
 
   useEffect(() => {
     const storedState = localStorage.getItem('isLoggedIn');
-    if (!storedState) return false;
+    if (!storedState) return ;
     setIsUser(true);
     setStore(storedState.token);
 
   }, [])
 
-  console.log(isUser, store);
+  useEffect(()=> {
+    if (typeof window !== 'undefined') {
+      const storedState = JSON.parse(localStorage.getItem('isLoggedIn'));
+      const token = storedState?.token;
+      setStore(token);
+    }
+  },[userDetails])
+  
 
   const router = useRouter();
 
@@ -97,7 +106,7 @@ function StoreProvider({ children }) {
         setErr(data.message)
       }
     } catch (error) {
-      toast.warning("Network connection issues");
+      toast.error("Network connection issues");
     }
   };
 
@@ -127,22 +136,17 @@ function StoreProvider({ children }) {
         toast.error(data.message)
       }
     } catch (error) {
-      toast.warning("Network connection issues");
+      toast.error("Network connection issues");
     }
   };
 
   const getUserDetails = async () => {
-    const storedState = JSON.parse(localStorage.getItem('isLoggedIn'));
-    if (storedState) {
-      const token = storedState?.token;
-      return token;
-    }
-
+   
     try {
       const response = await fetch('https://hackathon-klusterthon-group.vercel.app/farmer/details', {
         method: 'GET',
         headers: {
-          'Authorization': 'X ' + token,
+          'Authorization': 'X ' + store,
         }
       });
 
@@ -150,12 +154,12 @@ function StoreProvider({ children }) {
       if (response.status === 200) {
         console.log(data)
         setFarmerData({ ...data });
-        console.log(farmerData.crops.length)
+        console.log(farmerData)
       } else {
         toast.error(data.message)
       }
     } catch (error) {
-      toast.warning("Network connection issues");
+      toast.error("Network connection issues");
     }
   };
 
@@ -195,6 +199,8 @@ function StoreProvider({ children }) {
     setHasAccount,
     isUser,
     setIsUser,
+    isVisible,
+    setIsVisible,
     userDetails,
     pathName,
     showResult,
