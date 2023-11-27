@@ -14,8 +14,8 @@ const LoginDetails = {
 }
 
 const CropDetails = {
-  location: '',
-  cropName: '',
+  country: '',
+  label: '',
   temperature: 0,
   humidity: 0,
   pH: 0,
@@ -161,32 +161,27 @@ function StoreProvider({ children }) {
 
   useEffect(() => {
     getUserDetails();
+
   }, [])
 
   const getPrediction = async () => {
-    const details = {
-      label: "cotton",
-      Country: "Nigeria",
-      temperature: 25.5,
-      humidity: 80.0,
-      waterAvailability: 0.6,
-      ph: 6.5
-    }
-    try {
-      const response = await fetch('https://prediction-engine-practice.onrender.com/predict_classification/', {
-        method: 'POST',
-        headers: {
-          // 'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(details),
-      });
+    console.log(farmerData, cropDetails)
 
-      const data = await response.json();
-      console.log(response)
-      console.log(data)
-    } catch (error) {
-      toast.warning("Network connection issues");
-    }
+    // try {
+    //   const response = await fetch('https://hackathon-klusterthon-group.vercel.app/crop/get_prediction', {
+    //     method: 'POST',
+    //     headers: {
+    //       // 'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(details),
+    //   });
+
+    //   const data = await response.json();
+    //   console.log(response)
+    //   console.log(data)
+    // } catch (error) {
+    //   toast.warning("Network connection issues");
+    // }
   };
 
   // useEffect(() => {
@@ -206,6 +201,7 @@ function StoreProvider({ children }) {
     farmerData,
     setShowResult,
     setPathName,
+    getPrediction,
     postUserDetails,
     handleLogin,
     setUserDetails

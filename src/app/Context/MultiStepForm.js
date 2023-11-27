@@ -7,7 +7,7 @@ export function useMultiStepForm(steps) {
     const [endStep, setEndstep] = useState(false);
 
     const next = () => {
-
+        console.log("this was clicked")
         setCurrentStep(i => {
             if (i >= steps.length - 1) {
                 setEndstep(true)

@@ -28,7 +28,7 @@ const FormWrapper = () => {
                     {step}
                 </div>
                 <div className='flex flex-col place-items-end w-2/5 float-right '>
-                   {isFirstStep && <button type="submit" className='flex place-items-end float-right ml-22 p-3 text-white font-bold bg-black rounded-lg' onClick={next}>Next <span className="ml-3 mb-1"><GrLinkNext /></span></button>}
+                   {isFirstStep && <button type="button" className='flex place-items-end float-right ml-22 p-3 text-white font-bold bg-black rounded-lg' onClick={next}>Next <span className="ml-3 mb-1"><GrLinkNext /></span></button>}
                 </div>
             </div>
         </>

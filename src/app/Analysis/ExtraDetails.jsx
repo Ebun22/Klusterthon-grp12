@@ -4,12 +4,14 @@ import { useStateContext } from '../Context/Context';
 import { useMultiStepForm } from '../Context/MultiStepForm';
 
 const ExtraDetails = () => {
-    const { cropDetails, setShowResult } = useStateContext();
+    const { cropDetails, setShowResult, getPrediction } = useStateContext();
     const { temperature, humidity, pH, waterAvalability } = cropDetails;
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setShowResult(true)
+        console.log(cropDetails)
+        getPrediction()
+        // setShowResult(true)
     }
     return (
         <div className='flex flex-col items-center my-6 '>
@@ -17,21 +19,21 @@ const ExtraDetails = () => {
             <form className='p-4 w-full' onSubmit={(e) => handleSubmit(e)}>
                 <div className='mb-4 flex flex-col w-full'>
                     <label className="font-bold">Atmospheric Temperature:</label>
-                    <input type='location' value={temperature} className='p-1 border border-black rounded-sm' />
+                    <input type='location' value={temperature} className='p-1 border border-black rounded-sm' onChange={handleChange} />
                 </div>
                 <div className='mb-4 flex flex-col w-full'>
                     <label className="font-bold">Atmospheric Humidity:</label>
-                    <input type='location' value={humidity} className='p-1 border border-black rounded-sm' />
+                    <input type='location' value={humidity} className='p-1 border border-black rounded-sm' onChange={handleChange} />
                 </div>
                 <div className='mb-4 flex flex-col w-full'>
                     <label className="font-bold">Soil Water Availability:</label>
-                    <input type='crop' value={waterAvalability} className='p-1 border border-black rounded-sm' />
+                    <input type='crop' value={waterAvalability} className='p-1 border border-black rounded-sm' onChange={handleChange} />
                 </div>
                 <div className='mb-4 flex flex-col w-full'>
                     <label className="font-bold">Soil pH:</label>
-                    <input type='location' value={pH} className='p-1 border border-black rounded-sm' />
+                    <input type='location' value={pH} className='p-1 border border-black rounded-sm' onChange={handleChange} />
                 </div>
-                <button type="submit" className='w-full p-3 text-white font-bold mx-auto bg-black rounded-lg' onClick={handleSubmit}>Submit</button>
+                <button type="button" className='w-full p-3 text-white font-bold mx-auto bg-black rounded-lg' onClick={handleSubmit}>Submit</button>
             </form>
         </div>
     )
