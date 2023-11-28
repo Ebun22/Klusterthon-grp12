@@ -63,9 +63,9 @@ function StoreProvider({ children }) {
   const [showResult, setShowResult] = useState(false);
   const [pathName, setPathName] = useState('');
   const [err, setErr] = useState('');
-  
+
   const router = useRouter();
-  
+
   useEffect(() => {
     localStorage.setItem('user', JSON.stringify(userDetails))
   }, [userDetails])
@@ -98,14 +98,13 @@ function StoreProvider({ children }) {
         },
         body: JSON.stringify(userDetails),
       });
-
       const data = await response.json();
       if (response.status === 200) {
         toast.success("Please Login with your details");
         setHasAccount(true);
       } else {
         console.log(data.message)
-        setErr(data.message)
+        toast.error(data.message)
       }
     } catch (error) {
       toast.error("Network connection issues");
@@ -132,10 +131,12 @@ function StoreProvider({ children }) {
           token: data.token
         }
         localStorage.setItem('isLoggedIn', JSON.stringify(logInDetails))
-        setIsUser(true)
         
         router.push("/Analysis")
-        setUserDetails(prev => ({ ...prev, ...data.farmer.details }));
+        setIsUser(true)
+        console.log(data)
+        console.log(data.farmer.details)
+        //setUserDetails(prev => ({ ...prev, ...data.farmer.details }));
       } else {
         toast.error(data.message)
       }
@@ -153,7 +154,7 @@ function StoreProvider({ children }) {
           'Authorization': 'X ' + JSON.parse(localStorage.getItem('isLoggedIn')).token,
         }
       });
-console.log(store)
+      console.log(store)
       const data = await response.json();
       if (response.status === 200) {
         console.log(data)
@@ -190,6 +191,7 @@ console.log(store)
     }
     console.log(farmerData, cropDetails)
     console.log(details)
+    setShowResult(true)
     try {
       const response = await fetch(`${URL}`, {
         method: 'POST',
@@ -199,7 +201,7 @@ console.log(store)
         body: JSON.stringify(details),
       });
       const data = await response.json();
-      if(response.status === 200){
+      if (response.status === 200) {
         setPrediction(data.predictions[0])
         setShowResult(true)
       }
@@ -208,7 +210,7 @@ console.log(store)
     }
   };
   console.log(farmerData.details.id)
- 
+
   const value = {
     cropDetails,
     setCropDetails,
