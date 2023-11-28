@@ -58,6 +58,7 @@ function StoreProvider({ children }) {
   const [cropDetails, setCropDetails] = useState(CropDetails);
   const [hasAccount, setHasAccount] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [store, setStore] = useState(null);
   const [isUser, setIsUser] = useState(persistLogin);
   const [showResult, setShowResult] = useState(false);
@@ -113,6 +114,8 @@ function StoreProvider({ children }) {
 
   const handleLogin = async () => {
     console.log('This is the post function')
+
+    setIsLoading(true)
     try {
       const response = await fetch('https://hackathon-klusterthon-group-12.vercel.app/farmer/sign_in', {
         method: 'POST',
@@ -124,6 +127,7 @@ function StoreProvider({ children }) {
 
       const data = await response.json();
       console.log(response.status)
+      setIsLoading(false)
       if (data.message === "Successful") {
 
         const logInDetails = {
@@ -225,6 +229,7 @@ function StoreProvider({ children }) {
     showResult,
     farmerData,
     prediction,
+    isLoading,
     setShowResult,
     setPathName,
     getPrediction,

@@ -1,6 +1,8 @@
 import StoreProvider from '../Context/Context';
+import { Suspense } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { Inter } from 'next/font/google'
+import Loading from './Loading';
 import { Header, SideBar } from '../components';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -21,7 +23,9 @@ export default function RootLayout({ children }) {
                         <SideBar />
                         <div className='flex flex-col w-full min-h-full bg-white overflow-x-hidden'>
                             <Header />
+                            <Suspense fallback={<Loading />}>
                             {children}
+                            </Suspense>
                         </div>
                     </div>
                 </StoreProvider>

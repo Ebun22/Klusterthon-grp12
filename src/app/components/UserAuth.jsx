@@ -2,9 +2,11 @@
 import React, { useRef } from 'react';
 import { Login, SignUp } from '.';
 import { useStateContext, } from '../Context/Context';
+import Loading from './Loading';
+// import Loading from '../Loading';
 
 const UserAuth = () => {
-    const { hasAccount } = useStateContext();
+    const { hasAccount, isLoading } = useStateContext();
     // const authCont = useRef(null)
     console.log(hasAccount);
     // const goToSignUp = () => { authCont.current.scrollLeft += 250, console.log("This is the login ", authCont.current) };
@@ -13,7 +15,7 @@ const UserAuth = () => {
 
             {hasAccount ?
                 <div className='flex flex-col items-center align-middle mt-18 h-full'>
-                    <Login />
+                {   isLoading ? <Loading /> :  <Login />}
                 </div>
                 :
                 <div className='flex flex-col align-middle mt-18 h-full'>
