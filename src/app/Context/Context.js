@@ -209,7 +209,7 @@ function StoreProvider({ children }) {
       if (response.status === 200) {
         console.log(data)
         setPrediction(data.predictions[0])
-        //setShowResult(true)
+        setShowResult(true)
       }else{
         toast.error(data.message)
       }
