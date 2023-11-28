@@ -181,6 +181,7 @@ function StoreProvider({ children }) {
   }, [prediction])
 
   const getPrediction = async () => {
+    console.log("I'm trying to predict")
     let details
     if (cropDetails.temperature === 0) {
       details = {
@@ -195,7 +196,7 @@ function StoreProvider({ children }) {
     }
     console.log(farmerData, cropDetails)
     console.log(details)
-    setShowResult(true)
+    //setShowResult(true)
     try {
       const response = await fetch(`${URL}`, {
         method: 'POST',
@@ -206,8 +207,11 @@ function StoreProvider({ children }) {
       });
       const data = await response.json();
       if (response.status === 200) {
+        console.log(data)
         setPrediction(data.predictions[0])
-        setShowResult(true)
+        //setShowResult(true)
+      }else{
+        toast.error(data.message)
       }
     } catch (error) {
       toast.error("Network connection issues");

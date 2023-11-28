@@ -13,7 +13,7 @@ const Header = () => {
 
     const handleLogOut = () => {
         localStorage.removeItem("isLoggedIn");
-        localStorage.removeItem("user");
+       // localStorage.removeItem("user");
 router.push('/')
         setIsUser(false);
     };
