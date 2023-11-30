@@ -1,0 +1,3 @@
+# Planting-time-Prediction-Engine
+This is a model trained on data you'd find in the repository with the ability to predict the best planting season for a farmer. I have finetuned it with endpoints which you can make use of for testing purposes to understand the workings of a model
+You should make use of the regression endpoint only in the event that you as as 'the farmer' only have your crop(label) and country which will then the predict the numrical values and then pass on to the other model (classification model) for processing. Please note the dataset is very limited and may not apply to what you nedd.

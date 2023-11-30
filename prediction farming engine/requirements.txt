@@ -1,0 +1,9 @@
+pandas
+scikit-learn
+matplotlib
+fastapi
+gunicorn
+flask
+requests
+flask_cors
+matplotlib

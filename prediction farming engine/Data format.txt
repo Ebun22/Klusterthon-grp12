@@ -1,0 +1,17 @@
+FEATURES
+label: Type of crop
+Country: Country where the crop is planted
+temperature: Temperature conditions
+humidity: Humidity levels
+water availability: Water availability for the crop
+ph: pH level of the soil
+
+DATA FORMAT
+{
+  "label": "Wheat",
+  "Country": "USA",
+  "temperature": 25.5,
+  "humidity": 60.0,
+  "water availability": 80.0,
+  "ph": 6.5
+}
