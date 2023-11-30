@@ -36,7 +36,7 @@ const CropDetails = () => {
             <div className='flex flex-col items-center align-middle'>
                 <p className="font-bold text-2xl">Congratulations🥳</p>
                 <p>Planted today? You can harvest this {label} in starting {prediction}!</p>
-                <Link href="/?=reports">
+                <Link href="/Reports">
                     <button className="p-3 mt-6 text-white font-bold mx-auto bg-black rounded-lg">View Reports</button>
                 </Link>
             </div>
