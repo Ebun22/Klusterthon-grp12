@@ -14,7 +14,7 @@ const LoginDetails = {
 }
 
 const CropDetails = {
-  Country: '',
+  country: '',
   label: '',
   temperature: 0,
   humidity: 0,
@@ -45,14 +45,13 @@ function persistLogin() {
   if (typeof window !== 'undefined') {
     const storedState = localStorage.getItem('isLoggedIn');
     if (!storedState) return;
-    return true
+    return 
   };
 }
 
 function StoreProvider({ children }) {
 
   const [farmerData, setFarmerData] = useState({ details: {}, crops: [] })
-  const [URL, setURL] = useState('')
   const [prediction, setPrediction] = useState('')
   const [userDetails, setUserDetails] = useState(persistForm);
   const [cropDetails, setCropDetails] = useState(CropDetails);
@@ -184,21 +183,19 @@ function StoreProvider({ children }) {
     console.log("I'm trying to predict")
     let details
     if (cropDetails.temperature === 0) {
-      details = {
-        Country: cropDetails.Country,
+      details =  {
+        country: cropDetails.country,
         label: cropDetails.label,
-        id: farmerData.details._id
+        id: farmerData.details._id,
       }
-      setURL('http://hackathon-klusterthon-group.vercel.app/crop/get_prediction')
     } else {
       details = { ...cropDetails, id: farmerData.details._id }
-      setURL('http://hackathon-klusterthon-group.vercel.app/crop/get_prediction')
     }
     console.log(farmerData, cropDetails)
     console.log(details)
     //setShowResult(true)
     try {
-      const response = await fetch(`${URL}`, {
+      const response = await fetch('http://hackathon-klusterthon-group.vercel.app/crop/get_prediction', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
