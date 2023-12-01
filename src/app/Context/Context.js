@@ -154,6 +154,7 @@ function StoreProvider({ children }) {
       const response = await fetch('https://hackathon-klusterthon-group.vercel.app/farmer/details', {
         method: 'GET',
         headers: {
+          'Content-Type': 'application/json',
           'Authorization': 'X ' + JSON.parse(localStorage.getItem('isLoggedIn')).token,
         }
       });
