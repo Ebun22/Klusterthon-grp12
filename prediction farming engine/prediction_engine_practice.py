@@ -201,6 +201,52 @@ def load_and_predict_classification_model(input_data):
 
     return predictions
 
+def combined_predict(input_data):
+    try:
+        if 'label' in input_data and 'country' in input_data and not("temperature" in input_data and "humidity" in input_data and "pH" in input_data and "waterAvailability" in input_data and "label" in input_data and "country" in input_data ):
+            # If input has 'label' and 'crops', pass it to regression model
+            regression_input = {
+                'label': input_data['label'],
+                'Country': input_data['country'],
+            }
+            processed_input_data = preprocess_rgs_input_data(regression_input)
+            processed_input_data = processed_input_data.reshape(1, -1)
+
+        # Call the function to load and predict using the regression model
+            regression_predictions = load_and_predict_regression_model(processed_input_data)
+            regression_predictions = regression_predictions.tolist()
+            regression_predictions = regression_predictions[0]
+            
+            regression_output = {
+                'temperature': regression_predictions[0],
+                'humidity': regression_predictions[1],
+                'ph': regression_predictions[2],
+                'water availability': regression_predictions[3]
+            }
+
+                            
+            print(regression_output)
+            # Combine the original input with regression predictions
+            new_input = {**input_data, **regression_output}
+            processed_input_data = preprocess_cls_input_data(new_input)
+            classification_input = processed_input_data.reshape(1, -1)
+        elif 'label' in input_data  and 'country' in input_data and "temperature" in input_data and "humidity" in input_data and "pH" in input_data and "waterAvailability" in input_data  and "label" in input_data and "country" in input_data:
+            # If input doesn't have 'label' and 'crops', pass it directly to classification model
+            processed_input_data = preprocess_cls_input_data(input_data)
+            classification_input = processed_input_data.reshape(1, -1)
+        classification_predictions = load_and_predict_classification_model(classification_input)
+
+        return jsonify({"predictions": classification_predictions.tolist()})
+    except KeyError as e:
+        return jsonify({"error": str(e)})
+
+# Endpoint for combined prediction
+@app.route("/predict_combined/", methods=["POST"])
+def predict_combined():
+    input_data = request.json
+    output = combined_predict(input_data)
+    return output
+    
 # Example usage:
 metrics_regression = train_and_save_regression_model('Crop_Data.csv')
 metrics_classification = train_and_save_classification_model('Crop_Data.csv')
@@ -215,32 +261,6 @@ with open('metrics_results.csv', 'w', newline='') as csvfile:
     # Write classification metrics
     for metric, value in metrics_classification.items():
         writer.writerow({'metric': metric, 'value': value})
-# Endpoints for predictions
-@app.route("/predict_regression/", methods=["POST"])
-def predict_regression():
-    try:
-        input_data = request.json
-        # Preprocess input dictionary into a DataFrame
-        processed_input_data = preprocess_rgs_input_data(input_data)
-        processed_input_data = processed_input_data.reshape(1, -1)
-
-        # Call the function to load and predict using the regression model
-        predictions = load_and_predict_regression_model(processed_input_data)
-        return jsonify({"predictions": predictions.tolist()})
-    except Exception as e:
-        return jsonify({"error": str(e)})
-
-@app.route("/predict_classification/", methods=["POST"])
-def predict_classification():
-    try:
-        input_data = request.json
-        processed_input_data = preprocess_cls_input_data(input_data)
-        processed_input_data = processed_input_data.reshape(1, -1)
-        predictions = load_and_predict_classification_model(processed_input_data)
-        
-        return jsonify({"predictions": predictions.tolist()})
-    except Exception as e:
-        return jsonify({"error": str(e)})
 
 if __name__ == "__main__":
     app.run(debug=True)

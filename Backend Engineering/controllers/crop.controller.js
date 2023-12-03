@@ -4,7 +4,7 @@ const { farmerDetailsModel, farmerCropsModel } = require('../models/farmer.model
 // Function to get the crop's prediction
 const getCropPrediction = async (req, res) => {
     console.log(req.body);
-    let { country, label, ph, temperature, humidity, waterAvailability, id } = req.body;
+    let { country, label, pH, temperature, humidity, waterAvailability, id } = req.body;
     if (temperature == undefined) {
         console.log('First Model Request');
         // const fetchData = async (url, data) => {
@@ -29,7 +29,7 @@ const getCropPrediction = async (req, res) => {
             //     temperature: regressionResult.predictions[0][0],
             //     humidity: regressionResult.predictions[0][1],
             //     "water availability": regressionResult.predictions[0][2],
-            //     ph: regressionResult.predictions[0][3]
+            //     pH: regressionResult.predictions[0][3]
             // };
 
             // const classificationResult = await fetchData("https://prediction-engine-practice.onrender.com/predict_classification/", classificationData);
@@ -41,7 +41,7 @@ const getCropPrediction = async (req, res) => {
             // const cropDetails = {
             //     country,
             //     label,
-            //     ph: classificationData.ph,
+            //     pH: classificationData.pH,
             //     temperature: classificationData.temperature,
             //     humidity: classificationData.humidity,
             //     waterAvailability: classificationData["water availability"]
@@ -71,23 +71,25 @@ const getCropPrediction = async (req, res) => {
 
         fetch("https://prediction-engine-practice.onrender.com/predict_combined/", requestOptions)
             .then(response => response.json())
-            .then(result => {
+            .then(async(result) => {
                 console.log(result)
                 if (!result?.predictions) {
                     res.status(478).json({ message: 'No Prediction For The Datas Provided' })
                     return;
                 }
-                let upload = farmerCropsModel.findOneAndUpdate({ farmerId: id }, { $push: { crops: { details: { country, label, ph, temperature, humidity, waterAvailability }, predictions: result.predictions } } })
+                let upload = await farmerCropsModel.findOneAndUpdate({ farmerId: id }, { $push: { crops: { details: { country, label, pH, temperature, humidity, waterAvailability }, predictions: result.predictions } } })
                 if (upload == null) {
-                    farmerCropsModel({ farmerId: id, crops: [{ details: { country, label, ph, temperature, humidity, waterAvailability }, predictions: result.predictions }] }).save()
+                    upload = await farmerCropsModel({ farmerId: id, crops: [{ details: { country, label, pH, temperature, humidity, waterAvailability }, predictions: result.predictions }] }).save()
                 }
-                res.status(200).json(data = { details: { country, label, ph, temperature, humidity, waterAvailability }, predictions: result.predictions });
+                console.log(upload);
+                res.status(200).json(data = { details: { country, label, pH, temperature, humidity, waterAvailability }, predictions: result.predictions });
             })
             .catch((err)=>{
                 console.log('An error occurred', err)
                 res.status(478).json({ message: 'No Prediction For The Datas Provided' })
             })
     } else {
+        console.log('Second Model Request')
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -96,8 +98,8 @@ const getCropPrediction = async (req, res) => {
             "country": country,
             "temperature": temperature,
             "humidity": humidity,
-            "water availability": waterAvailability,
-            "ph": ph
+            "waterAvailability": waterAvailability,
+            "pH": pH
         });
 
         var requestOptions = {
@@ -107,18 +109,19 @@ const getCropPrediction = async (req, res) => {
             redirect: 'follow'
         };
 
-        fetch("https://prediction-engine-practice.onrender.com/predict_classification/", requestOptions)
+        fetch("https://prediction-engine-practice.onrender.com/predict_combined/", requestOptions)
             .then(response => response.json())
-            .then(result => {
+            .then(async(result) => {
                 if (!result?.predictions) {
                     res.status(478).json({ message: 'No Prediction For The Datas Provided' })
                     return;
                 }
-                let upload = farmerCropsModel.findOneAndUpdate({ farmerId: id }, { $push: { crops: { details: { country, label, ph, temperature, humidity, waterAvailability }, predictions: result.predictions } } })
+                let upload = await farmerCropsModel.findOneAndUpdate({ farmerId: id }, { $push: { crops: { details: { country, label, pH, temperature, humidity, waterAvailability }, predictions: result.predictions } } })
                 if (upload == null) {
-                    farmerCropsModel({ farmerId: id, crops: [{ details: { country, label, ph, temperature, humidity, waterAvailability }, predictions: result.predictions }] }).save()
+                    upload = await farmerCropsModel({ farmerId: id, crops: [{ details: { country, label, pH, temperature, humidity, waterAvailability }, predictions: result.predictions }] }).save()
                 }
-                res.status(200).json(data = { details: { country, label, ph, temperature, humidity, waterAvailability }, predictions: result.predictions });
+                console.log(upload);
+                res.status(200).json(data = { details: { country, label, pH, temperature, humidity, waterAvailability }, predictions: result.predictions });
             })
             .catch(error => {
                 console.log('error', error)
