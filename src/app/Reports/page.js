@@ -129,7 +129,7 @@ const Report = () => {
                                     details={[
                                         <p id={_id}>{details?.label}</p>,
                                         <p id={_id} className="flex flex-row justify-center">{_id}</p>,
-                                        <p id={_id}>{details?.Country}</p>,
+                                        <p id={_id}>{details?.country || details?.Country}</p>,
                                         <p id={_id} className="flex flex-row justify-center">{predictions}</p>,
                                         <p id={_id} className="flex flex-row justify-center">{predictions && getmonths(predictions)}</p>
                                     ]
