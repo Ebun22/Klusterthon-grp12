@@ -18,7 +18,7 @@ const CropDetails = {
   label: '',
   temperature: 0,
   humidity: 0,
-  ph: 0,
+  pH: 0,
   waterAvailability: 0,
 }
 
@@ -196,7 +196,7 @@ function StoreProvider({ children }) {
     console.log(details)
     //setShowResult(true)
     try {
-      const response = await fetch('http://hackathon-klusterthon-group.vercel.app/crop/get_prediction', {
+      const response = await fetch('https://hackathon-klusterthon-group.vercel.app/crop/get_prediction', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

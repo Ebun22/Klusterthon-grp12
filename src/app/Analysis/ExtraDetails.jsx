@@ -5,7 +5,7 @@ import { useMultiStepForm } from '../Context/MultiStepForm';
 
 const ExtraDetails = () => {
     const { cropDetails, setShowResult, getPrediction, setCropDetails } = useStateContext();
-    const { temperature, humidity, ph,  waterAvailability } = cropDetails;
+    const { temperature, humidity, pH,  waterAvailability } = cropDetails;
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -36,7 +36,7 @@ const ExtraDetails = () => {
                 </div>
                 <div className='mb-4 flex flex-col w-full'>
                     <label className="font-bold">Soil pH:</label>
-                    <input type='number' value={ph} name="ph" className='p-1 border border-black rounded-sm' onChange={handleChange} />
+                    <input type='number' value={pH} name="pH" className='p-1 border border-black rounded-sm' onChange={handleChange} />
                 </div>
                 <button type="button" className='w-full p-3 text-white font-bold mx-auto bg-black rounded-lg' onClick={handleSubmit}>Submit</button>
             </form>
